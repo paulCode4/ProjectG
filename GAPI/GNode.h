@@ -41,13 +41,13 @@ private:
     std::string m_name;
 	std::map <std::string, GNode*> m_connNodes;
 
-	//
+	//Helper to avoid recursion call of connect
 	//Makes the connection in the attached node
 	//
 	void connectPeer(GNode *ipNode);
 
 
-	//
+	//Helper to avoid recursion call of disconnect
 	//Breaks the connection in the attached node
 	//
 	void disconnectPeer(GNode *ipNode);

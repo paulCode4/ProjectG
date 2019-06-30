@@ -21,6 +21,8 @@ GGraph::~GGraph(void)
 
 GNode* GGraph::addNode(const std::string& iName)
 {
+	GNode* fRet = NULL;
+
 	if ("" != iName)
 	{
 		if (0 == m_graphNodes.count(iName))
@@ -29,28 +31,25 @@ GNode* GGraph::addNode(const std::string& iName)
 			m_graphNodes.emplace(std::make_pair(iName, newNode));
 			return newNode;
 		}
-		else
-		{
-			return NULL;
-		}
 	}
-	else
-	{
-		return NULL;
-	}
+
+	return fRet;
 }
 
 GNode* GGraph::getNode(const std::string& iName)
 {
+	GNode* fRet = NULL;
+
 	if (1 == m_graphNodes.count(iName))
 	{
-		return m_graphNodes[iName];
+		fRet = m_graphNodes[iName];
 	}
 	else
 	{
 		//printf("\nThe node identified by the name: %s does not exist!", iName);
-		return NULL;
 	}
+
+	return fRet;
 }
 
 ReturnCode GGraph::removeNode(const std::string& iName)
