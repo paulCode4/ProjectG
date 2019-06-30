@@ -1,0 +1,22 @@
+﻿cl : Command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  TestObjectTracker.cpp
+d:\devworkarea\trainings\siemensexercise\gtest\testcase.h(90): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
+d:\devworkarea\trainings\siemensexercise\gtest\testcase.h(99): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
+d:\devworkarea\trainings\siemensexercise\gapi\gnode.h(40): warning C4251: 'GNode::m_name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GNode'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xstring(4373): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  TestNode.cpp
+d:\devworkarea\trainings\siemensexercise\gtest\testcase.h(90): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
+d:\devworkarea\trainings\siemensexercise\gtest\testcase.h(99): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
+d:\devworkarea\trainings\siemensexercise\gapi\gnode.h(40): warning C4251: 'GNode::m_name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GNode'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xstring(4373): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  TestGraph.cpp
+d:\devworkarea\trainings\siemensexercise\gtest\testcase.h(90): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
+d:\devworkarea\trainings\siemensexercise\gtest\testcase.h(99): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
+d:\devworkarea\trainings\siemensexercise\gapi\gnode.h(40): warning C4251: 'GNode::m_name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GNode'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xstring(4373): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  main.cpp
+d:\devworkarea\trainings\siemensexercise\gtest\testcase.h(90): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
+d:\devworkarea\trainings\siemensexercise\gtest\testcase.h(99): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
+  Generating Code...
+main.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  GTest.vcxproj -> D:\DevWorkArea\Trainings\SiemensExercise\Debug\GTest.exe

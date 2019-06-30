@@ -1,0 +1,9 @@
+﻿cl : Command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  GNode.cpp
+d:\devworkarea\trainings\siemensexercise\gapi\gnode.h(40): warning C4251: 'GNode::m_name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GNode'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xstring(4373): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  GGraph.cpp
+  Generating Code...
+GGraph.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+     Creating library D:\DevWorkArea\Trainings\SiemensExercise\Debug\GAPI.lib and object D:\DevWorkArea\Trainings\SiemensExercise\Debug\GAPI.exp
+  GAPI.vcxproj -> D:\DevWorkArea\Trainings\SiemensExercise\Debug\GAPI.dll
