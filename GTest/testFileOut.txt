@@ -1,0 +1,6 @@
+ga
+na
+nb
+
+na nb
+nb na

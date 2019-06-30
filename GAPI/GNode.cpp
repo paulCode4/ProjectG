@@ -90,6 +90,21 @@ int GNode::getNumConnectedTo()
     return m_connNodes.size();
 }
 
+std::string GNode::getConnectedNodesOutputString()
+{
+	std::string fRet = "";
+
+	if (!m_connNodes.empty())
+	{
+		for (auto conn : m_connNodes)
+		{
+			fRet = fRet + " " + conn.first;
+		}
+	}
+
+	return fRet;
+}
+
 void GNode::connectPeer(GNode * ipNode)
 {
 	m_connNodes.emplace(std::make_pair(ipNode->getName(), ipNode));

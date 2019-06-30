@@ -37,6 +37,11 @@ public:
     //Get number of nodes which this node connects to
     //
     int getNumConnectedTo();
+
+	//
+	//Used in the graph file saving feature
+	//
+	std::string getConnectedNodesOutputString();
 private:
     std::string m_name;
 	std::map <std::string, GNode*> m_connNodes;

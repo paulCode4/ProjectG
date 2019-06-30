@@ -96,5 +96,10 @@ void TestGraph::testNodeAccess()
 
 void TestGraph::testSaveLoad()
 {
-    //TO BE IMPLEMENTED
+	GGraph *pGraph = new GGraph("ga");
+	GNode *pNode1 = pGraph->addNode("na");
+	GNode *pNode2 = pGraph->addNode("nb");
+	pNode1->connect(pNode2);
+
+	pGraph->save("testFileOut.txt");
 }

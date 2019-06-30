@@ -1,6 +1,8 @@
 #include "GGraph.h"
 
 #include "stdio.h"
+#include <iostream>
+#include <fstream>
 
 GGraph::GGraph(const std::string &iName) : m_name(iName)
 {
@@ -81,7 +83,39 @@ ReturnCode GGraph::removeNode(const std::string& iName)
 
 ReturnCode GGraph::save(const std::string& iFileName)
 {
-    return RC_NotImplemented;
+	ReturnCode fRet = RC_NotImplemented;
+
+	std::ofstream output;
+	output.open(iFileName);
+
+	//write graph name on 1st line
+	output << m_name;
+	output << "\n";
+	//continue with graph nodes on 2nd line to the nth line
+	if (m_graphNodes.size())
+	{
+		for (auto node : m_graphNodes)
+		{
+			output << node.first;
+			output << "\n";
+		}
+		//finish node representation with another new line
+		output << "\n";
+
+		//for each node print on a line separated by space all its connection nodes
+		//eg. NodeName ConnNode1 ConnNode2 ......
+		for (auto node : m_graphNodes)
+		{
+			std::string nodeWithConns = node.first + node.second->getConnectedNodesOutputString();
+			output << nodeWithConns;
+			output << "\n";
+		}
+		fRet = RC_OK;
+	}
+
+	output.close();
+
+    return fRet;
 }
 
 ReturnCode GGraph::load(const std::string& iFileName)
