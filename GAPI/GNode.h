@@ -3,6 +3,7 @@
 #include "GAPI.h"
 
 #include <string>
+#include <map>
 
 /**
  * GNode class represents a node in a given graph. Each node is 
@@ -38,4 +39,16 @@ public:
     int getNumConnectedTo();
 private:
     std::string m_name;
+	std::map <std::string, GNode*> m_connNodes;
+
+	//
+	//Makes the connection in the attached node
+	//
+	void connectPeer(GNode *ipNode);
+
+
+	//
+	//Breaks the connection in the attached node
+	//
+	void disconnectPeer(GNode *ipNode);
 };

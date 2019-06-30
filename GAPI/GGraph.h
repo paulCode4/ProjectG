@@ -3,8 +3,10 @@
 #include "GAPI.h"
 
 #include <string>
+#include <map>
 
-class GNode;
+#include "GNode.h"
+
 
 /**
  * GGraph class represents a graph object which is used to group a number of nodes.
@@ -47,4 +49,6 @@ public:
     ReturnCode load(const std::string& iFileName);
     
 private:
+	std::map <std::string, GNode*> m_graphNodes;
+	std::string m_name;
 };
