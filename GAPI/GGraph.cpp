@@ -10,7 +10,7 @@ GGraph::GGraph(const std::string &iName) : m_name(iName)
 
 GGraph::~GGraph(void)
 {
-	if (0 != m_graphNodes.size())
+	if (!m_graphNodes.empty())
 	{
 		for (auto node : m_graphNodes)
 		{
@@ -92,7 +92,7 @@ ReturnCode GGraph::save(const std::string& iFileName)
 	output << m_name;
 	output << "\n";
 	//continue with graph nodes on 2nd line to the nth line
-	if (m_graphNodes.size())
+	if (!m_graphNodes.empty())
 	{
 		for (auto node : m_graphNodes)
 		{
