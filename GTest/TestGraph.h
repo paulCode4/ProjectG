@@ -41,5 +41,11 @@ private:
     //When saved, a Graph dumps all its content to a file so 
     //it can be restored back from file. 
     //
-    void testSaveLoad();  
+    void testSaveLoad();
+
+	//
+	//Helper function to compare the graph save/load feature
+	//Returns true if text inside is the same, false otherwise
+	//
+	bool compareTextFiles(std::string iFile1, std::string iFile2);
 };
