@@ -66,10 +66,17 @@ ReturnCode GGraph::removeNode(const std::string& iName)
 		GNode* remNode = getNode(iName);
 		if (NULL != remNode)
 		{
-			remNode->disconnectAll();
-			delete remNode;
-			m_graphNodes.erase(iName);
-			fRet = RC_OK;
+			if (remNode->getNumConnectedTo() > 0)
+			{
+				fRet = RC_ParameterError;
+				//printf("\nThe node is still connected to other nodes! Cannot remove!");
+			}
+			else
+			{
+				delete remNode;
+				m_graphNodes.erase(iName);
+				fRet = RC_OK;
+			}
 		}
 		else
 		{
