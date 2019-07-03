@@ -118,10 +118,19 @@ void TestGraph::testSaveLoad()
 	ASSERT_EQUALS(pGraphL->load("testFileOut.txt"), RC_OK);
 	
 	ASSERT_EQUALS(pGraphL->save("testFileOutLoaded.txt"), RC_OK);
-
+	ASSERT_EQUALS(*pGraph == *pGraphL, true);
 	ASSERT_EQUALS(compareTextFiles("testFileOut.txt", "testFileOutLoaded.txt"), true);
 
 	ASSERT_EQUALS(pGraphL->load("whatFile?.txt"), RC_ParameterError);
+
+	ASSERT_EQUALS(pGraph->load("testGraphLoad.txt"), RC_OK);
+	ASSERT_EQUALS(pGraphL->load("testGraphLoad.txt"), RC_OK);
+	ASSERT_EQUALS(*pGraph == *pGraphL, true);
+
+	ASSERT_EQUALS(pGraphL->load("testFileOut.txt"), RC_OK);
+	ASSERT_EQUALS(*pGraph == *pGraphL, false);
+
+	ASSERT_EQUALS(pGraphL->load("failLoadG.txt"), RC_ValueError);
 
 	delete pGraph;
 	delete pGraphL;

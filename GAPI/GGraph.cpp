@@ -23,6 +23,32 @@ GGraph::~GGraph(void)
 	}
 }
 
+bool GGraph::operator==(GGraph& iGraph)
+{
+	bool fRet = true;
+	fRet = (m_name == iGraph.m_name) &&
+		   (m_graphNodes.size() == iGraph.m_graphNodes.size());
+
+	if (fRet)
+	{
+		for (auto node : m_graphNodes)
+		{
+			if (node.second->getName().compare(iGraph.getNode(node.first)->getName()) != 0)
+			{
+				fRet = false;
+				break;
+			}
+			else if (node.second->getConnectedNodesOutputString().compare(iGraph.getNode(node.first)->getConnectedNodesOutputString()) != 0)
+			{
+				fRet = false;
+				break;
+			}
+		}
+	}
+	
+	return fRet;
+}
+
 
 GNode* GGraph::addNode(const std::string& iName)
 {
@@ -185,13 +211,13 @@ ReturnCode GGraph::load(const std::string& iFileName)
 					GNode* node = getNode(p);
 					while (p != 0)
 					{
-						if (node)
+						if (NULL != node)
 						{
 							p = std::strtok(NULL, " ");
 							if (p != 0)
 							{
 								GNode* connection = getNode(p);
-								if (connection)
+								if (NULL != connection)
 								{
 									node->connect(connection);
 								}
@@ -227,6 +253,11 @@ ReturnCode GGraph::load(const std::string& iFileName)
 		fRet = RC_ParameterError;
 	}
     return fRet;
+}
+
+int GGraph::getObjectCounter()
+{
+	return GTrackedObject::getInstanceCounter();
 }
 
 int GGraph::getNumNodes()

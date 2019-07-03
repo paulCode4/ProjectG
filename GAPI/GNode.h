@@ -5,11 +5,13 @@
 #include <string>
 #include <map>
 
+#include "GTrackedObject.h"
+
 /**
  * GNode class represents a node in a given graph. Each node is 
  * identified by a unique name.
  **/
-class GAPI_API GNode
+class GAPI_API GNode : public GTrackedObject
 {
 public:
     GNode(const std::string &iName);
@@ -42,6 +44,12 @@ public:
 	//Used in the graph file saving feature
 	//
 	std::string getConnectedNodesOutputString();
+
+	//
+	//Exposing the object counter
+	//
+	int getObjectCounter();
+
 private:
     std::string m_name;
 	std::map <std::string, GNode*> m_connNodes;

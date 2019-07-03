@@ -36,6 +36,7 @@ void TestNode::testConstruct()
     ASSERT_EQUALS(pNode->getName(), "na");
     ASSERT_EQUALS(pNode->getNumConnectedTo(), 0);
     
+	delete pNode;
 }
 
 void TestNode::testConnect()
@@ -48,6 +49,9 @@ void TestNode::testConnect()
     ASSERT_EQUALS(pNode->getNumConnectedTo(), 1);
     ASSERT_EQUALS(pNode->connect(pNa), RC_ValueError);
     ASSERT_EQUALS(pNode->getNumConnectedTo(), 1);
+
+	delete pNode;
+	delete pNa;
 }
 
 void TestNode::testDisconnect()
@@ -61,6 +65,9 @@ void TestNode::testDisconnect()
     ASSERT_EQUALS(pNode->disconnect(pNa), RC_OK);
     ASSERT_EQUALS(pNode->getNumConnectedTo(), 0);
     ASSERT_EQUALS(pNode->disconnect(pNa), RC_ValueError);
+
+	delete pNode;
+	delete pNa;
 }
 
 void TestNode::testDisconnectAll()
@@ -76,5 +83,9 @@ void TestNode::testDisconnectAll()
     ASSERT_EQUALS(pNode->getNumConnectedTo(), 0);
     ASSERT_EQUALS(pNode->disconnect(pNa), RC_ValueError);
     ASSERT_EQUALS(pNode->disconnect(pNb), RC_ValueError);
+
+	delete pNode;
+	delete pNa;
+	delete pNb;
 }
 

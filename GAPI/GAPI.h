@@ -23,4 +23,3 @@ enum GAPI_API ReturnCode
     RC_ValueError,
     RC_NotImplemented,
 };
-

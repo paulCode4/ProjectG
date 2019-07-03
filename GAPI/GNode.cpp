@@ -105,6 +105,11 @@ std::string GNode::getConnectedNodesOutputString()
 	return fRet;
 }
 
+int GNode::getObjectCounter()
+{
+	return GTrackedObject::getInstanceCounter();
+}
+
 void GNode::connectPeer(GNode * ipNode)
 {
 	m_connNodes.emplace(std::make_pair(ipNode->getName(), ipNode));
