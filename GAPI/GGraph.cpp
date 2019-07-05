@@ -4,23 +4,17 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-//#include <algorithm>
+
 
 
 GGraph::GGraph(const std::string &iName) : m_name(iName)
 {
+	GTrackedObject::incrementGraphInstanceCounter();
 }
 
 GGraph::~GGraph(void)
 {
-	if (!m_graphNodes.empty())
-	{
-		for (auto node : m_graphNodes)
-		{
-			::delete node.second;
-		}
-		m_graphNodes.clear();
-	}
+	GTrackedObject::decrementGraphInstanceCounter();
 }
 
 bool GGraph::operator==(GGraph& iGraph)
@@ -49,6 +43,34 @@ bool GGraph::operator==(GGraph& iGraph)
 	return fRet;
 }
 
+void GGraph::removeGraph()
+{
+	if (!m_graphNodes.empty())
+	{
+		for (auto node : m_graphNodes)
+		{
+			node.second->setGraphOwned(false);
+		}
+		m_graphNodes.clear();
+	}
+	delete(this);
+}
+
+void GGraph::deleteGraph()
+{
+	if (!m_graphNodes.empty())
+	{
+		for (auto node : m_graphNodes)
+		{
+			node.second->setGraphOwned(false);
+			node.second->disconnectAll();
+			node.second->deleteNode();
+		}
+		m_graphNodes.clear();
+	}
+	delete(this);
+}
+
 
 GNode* GGraph::addNode(const std::string& iName)
 {
@@ -56,11 +78,11 @@ GNode* GGraph::addNode(const std::string& iName)
 
 	if ("" != iName)
 	{
-		if (0 == m_graphNodes.count(iName))
+		if (0 == m_graphNodes.count(iName) && GNode::isNodeNameUnique(iName))
 		{
 			GNode* newNode = new GNode(iName);
 			m_graphNodes.emplace(std::make_pair(iName, newNode));
-			newNode->setGraphOwned(true);
+			newNode->setGraphOwned(this);
 			fRet = newNode;
 		}
 	}
@@ -96,12 +118,13 @@ ReturnCode GGraph::removeNode(const std::string& iName)
 			if (remNode->getNumConnectedTo() > 0)
 			{
 				fRet = RC_ParameterError;
-				//printf("\nThe node is still connected to other nodes! Cannot remove!");
+				remNode->deleteNode();
+				//printf("\nThe node is still connected to other nodes! The node will remove itself when conditions are met!");
 			}
 			else
 			{
-				remNode->setGraphOwned(false);
-				delete remNode;
+				remNode->setGraphOwned(NULL);
+				remNode->deleteNode();
 				m_graphNodes.erase(iName);
 				fRet = RC_OK;
 			}
@@ -118,6 +141,20 @@ ReturnCode GGraph::removeNode(const std::string& iName)
 	}
 
     return fRet;
+}
+
+void GGraph::removeAllNodes()
+{
+	if (!m_graphNodes.empty())
+	{
+		for (auto node : m_graphNodes)
+		{
+			node.second->setGraphOwned(false);
+			node.second->disconnectAll();
+			node.second->deleteNode();
+		}
+		m_graphNodes.clear();
+	}
 }
 
 ReturnCode GGraph::save(const std::string& iFileName)
@@ -255,11 +292,6 @@ ReturnCode GGraph::load(const std::string& iFileName)
 		fRet = RC_ParameterError;
 	}
     return fRet;
-}
-
-int GGraph::getObjectCounter()
-{
-	return GTrackedObject::getInstanceCounter();
 }
 
 int GGraph::getNumNodes()

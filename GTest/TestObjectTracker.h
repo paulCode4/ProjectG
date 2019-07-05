@@ -3,29 +3,6 @@
 //class GObjectTracker;
 //class GTrackedObject;
 
-//****The GObjectTracker counter class will keep hold of all instances numbers (graphs + nodes) - common counter variable
-//****Rename to GTrackedObject
-
-//will have to implement the marking of the objects for deletion/removal when linked to other nodes
-//shall be destructed when connectionless
-
-//A node can be destroyed only if not connected to other node/s AND not being part of a graph 
-
-//Add existing nodes to a graph
-
-//ObjectPool?
-	//could create instances (dynamically)
-	//dispense() could mark an object(nodes mainly as not needed)
-
-//OR
-
-//https://www.geeksforgeeks.org/overloading-new-delete-operator-c/
-//https://www.modernescpp.com/index.php/overloading-operator-new-and-delete
-//deletion marker for nodes, isPartOfGraph flag
-
-
-
-
 /**
  * Test Case to check that life cycle of objects are managed correctly. Below the word 
  * "Deletion" is used as "not using an object anymore". It does not necesserily refer to 

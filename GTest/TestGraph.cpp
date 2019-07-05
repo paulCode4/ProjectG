@@ -47,7 +47,7 @@ void TestGraph::testConstruct()
     GGraph *pGraph = new GGraph("ga");
     ASSERT_NOT_EQUALS(pGraph, NULL);
     ASSERT_EQUALS(pGraph->getNumNodes(), 0);
-	delete pGraph;
+	pGraph->deleteGraph();
 }
 
 //
@@ -63,13 +63,17 @@ void TestGraph::testAddNode()
 
     GNode *pNode_na = pGraph->addNode("na");
     ASSERT_NOT_EQUALS(pNode_na, NULL);
+	//unique name
+	GNode *pNode_nb = pGraph->addNode("na");
+	ASSERT_EQUALS(pNode_nb, NULL);
+
     ASSERT_EQUALS(pGraph->getNumNodes(), numNodes + 1);
     pNode_na = NULL;
 
     pNode_na = pGraph->addNode("na");
     ASSERT_EQUALS(pNode_na, NULL);
     ASSERT_EQUALS(pGraph->getNumNodes(), numNodes + 1);
-	delete pGraph;
+	pGraph->deleteGraph();
 }
 
 //
@@ -88,7 +92,7 @@ void TestGraph::testRemoveNode()
     ASSERT_EQUALS(pGraph->getNumNodes(), numNodes - 1);
     
     ASSERT_EQUALS(pGraph->removeNode("na"), RC_ValueError);
-	delete pGraph;
+	pGraph->deleteGraph();
 }
 
 
@@ -98,7 +102,7 @@ void TestGraph::testNodeAccess()
     ASSERT_EQUALS(pGraph->getNode("na"), NULL);
     GNode *pNode = pGraph->addNode("na");
     ASSERT_EQUALS(pGraph->getNode("na"), pNode);
-	delete pGraph;
+	pGraph->deleteGraph();
 }
 
 void TestGraph::testSaveLoad()
@@ -132,8 +136,8 @@ void TestGraph::testSaveLoad()
 
 	ASSERT_EQUALS(pGraphL->load("failLoadG.txt"), RC_ValueError);
 
-	delete pGraph;
-	delete pGraphL;
+	pGraph->deleteGraph();
+	pGraphL->deleteGraph();
 }
 
 bool TestGraph::compareTextFiles(std::string iFile1, std::string iFile2)

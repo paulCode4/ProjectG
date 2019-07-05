@@ -4,6 +4,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 #include "GTrackedObject.h"
 
@@ -11,16 +12,21 @@
  * GNode class represents a node in a given graph. Each node is 
  * identified by a unique name.
  **/
-class GAPI_API GNode : public GTrackedObject
+class GAPI_API GNode
 {
 public:
     GNode(const std::string &iName);
+	GNode(const GNode&) = delete;
     ~GNode(void);
+	//override of ==
+	bool operator==(GNode& iNode);
+	//override of !=
+	bool operator!=(GNode& iNode);
 
 	//
 	//override delete op to have controled destruction/deallocation
 	//
-	void operator delete(void * p) noexcept;
+	void deleteNode();
 
 	//
 	//name getter
@@ -54,28 +60,31 @@ public:
 	std::string getConnectedNodesOutputString();
 
 	//
-	//Exposing the object counter
-	//
-	int getObjectCounter();
-
-	//
 	//sets mf_graphOwned
 	//
-	void setGraphOwned(const bool& iGOwned);
+	void setGraphOwned(void* iGraphAddress);
 
 	//
 	//gets mf_markForDeletion
 	//
 	const bool& isMarkedForDeletion();
 
+	//
+	//gets mf_markForDeletion
+	//
+	static bool isNodeNameUnique(const std::string& iNewNameCtor);
+
 private:
+	//Node name
     std::string m_name;
 	//pointers to connected nodes mapped by name key
 	std::map <std::string, GNode*> m_connNodes;
-	//flag when node is part of graph
-	bool mf_graphOwned;
+	//pointer to parent graph
+	void* mp_graphOwned;
 	//flag node for deletion, deallocation will take place when node no longer used
 	bool mf_markForDeletion;
+	//static vector of strings to hold node names - used in checking name unicity
+	static std::vector <std::string> ms_names;
 
 	//Helper to avoid recursion call of connect
 	//Makes the connection in the attached node
