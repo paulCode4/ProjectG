@@ -24,7 +24,7 @@ public:
     //Create a new node object and store it in graph for future access
     //Created object is returned to the caller as well
     //
-    GNode *addNode(const std::string &iName);
+    GNode* addNode(const std::string &iName);
 
     //
     //Remove the node given by its name.

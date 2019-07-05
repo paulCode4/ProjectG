@@ -1,12 +1,31 @@
 #include "GNode.h"
 
 
-GNode::GNode(const std::string &iName) : m_name(iName)
+GNode::GNode(const std::string &iName) : m_name(iName), mf_graphOwned(false), mf_markForDeletion(false)
 {
 }
 
 GNode::~GNode(void)
 {
+}
+
+void GNode::operator delete(void * p) noexcept
+{
+	GNode* node = reinterpret_cast<GNode*> (p);
+	printf("DeleteP:%p\n", p);
+	printf("DeleteNode:%p\n", node);
+	if (node->isDeletable())
+	{
+		::delete(p);
+	}
+	else
+	{
+		node->mf_markForDeletion = true;
+		//connections with nodes that are also marked for deletion
+		//become useless, therefore have to be disconnected
+		node->remConnectionWithDelMarkNodes();
+		
+	}
 }
 
 ReturnCode GNode::connect(GNode *ipNode)
@@ -82,6 +101,11 @@ ReturnCode GNode::disconnectAll()
 		fRet = RC_ValueError;
 	}
 
+	if (!mf_graphOwned && mf_markForDeletion)
+	{
+		delete(this);
+	}
+
     return fRet;
 }
 
@@ -110,6 +134,21 @@ int GNode::getObjectCounter()
 	return GTrackedObject::getInstanceCounter();
 }
 
+void GNode::setGraphOwned(const bool& iGOwned)
+{
+	mf_graphOwned = iGOwned;
+
+	if (isDeletable() && mf_markForDeletion)
+	{
+		delete(this);
+	}
+}
+
+const bool & GNode::isMarkedForDeletion()
+{
+	return mf_markForDeletion;
+}
+
 void GNode::connectPeer(GNode * ipNode)
 {
 	m_connNodes.emplace(std::make_pair(ipNode->getName(), ipNode));
@@ -118,4 +157,32 @@ void GNode::connectPeer(GNode * ipNode)
 void GNode::disconnectPeer(GNode * ipNode)
 {
 	m_connNodes.erase(ipNode->getName());
+	if (isDeletable() && mf_markForDeletion)
+	{
+		delete(this);
+	}
+}
+
+bool GNode::isDeletable()
+{
+	bool fRet = false;
+	//printf("<ConnEmpty:%d - ConnSize:%d- %s>", m_connNodes.empty(), m_connNodes.size(), getConnectedNodesOutputString().c_str());
+	if ((!mf_graphOwned) && m_connNodes.empty())
+	{
+		fRet = true;
+	}
+	
+	return fRet;
+}
+
+void GNode::remConnectionWithDelMarkNodes()
+{
+	for (auto node : m_connNodes)
+	{
+		if (node.second->isMarkedForDeletion())
+		{
+			node.second->disconnectPeer(this);
+			m_connNodes.erase(node.first);
+		}
+	}
 }

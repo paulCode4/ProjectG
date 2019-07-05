@@ -1,5 +1,7 @@
 #pragma once
-class GTrackedObject
+#include "GAPI.h"
+
+class GAPI_API GTrackedObject
 {
 public:
 	GTrackedObject();

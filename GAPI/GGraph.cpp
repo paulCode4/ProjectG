@@ -60,6 +60,7 @@ GNode* GGraph::addNode(const std::string& iName)
 		{
 			GNode* newNode = new GNode(iName);
 			m_graphNodes.emplace(std::make_pair(iName, newNode));
+			newNode->setGraphOwned(true);
 			fRet = newNode;
 		}
 	}
@@ -99,6 +100,7 @@ ReturnCode GGraph::removeNode(const std::string& iName)
 			}
 			else
 			{
+				remNode->setGraphOwned(false);
 				delete remNode;
 				m_graphNodes.erase(iName);
 				fRet = RC_OK;
@@ -179,7 +181,7 @@ ReturnCode GGraph::load(const std::string& iFileName)
 					{
 						for (auto node : m_graphNodes)
 						{
-							delete node.second;
+							::delete node.second;
 						}
 						m_graphNodes.clear();
 					}
@@ -203,7 +205,7 @@ ReturnCode GGraph::load(const std::string& iFileName)
 
 				default://all following lines will contain nodes with their connections
 				{
-					//parse and tokenize the line to get the graph node and its connetions
+					//parse and tokenize the line to get the graph node and its connections
 					char * cstr = new char[line.length() + 1];
 					std::strcpy(cstr, line.c_str());
 

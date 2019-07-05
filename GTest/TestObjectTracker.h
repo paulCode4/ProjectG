@@ -21,6 +21,7 @@
 
 //https://www.geeksforgeeks.org/overloading-new-delete-operator-c/
 //https://www.modernescpp.com/index.php/overloading-operator-new-and-delete
+//deletion marker for nodes, isPartOfGraph flag
 
 
 
@@ -63,9 +64,16 @@ private:
      * @action: Create connections A->B, A->C and A->D
      * @test: Deletion of GNode object (D) does NOT decrease the tracked object counter
      * @test: Disconnecting A->D connection decreases the tracked object counter by 1
+	 * -------CONTRADICTS THE FIRST PART OF THE TEST------------------------------------
      * @test: Deletion of GNode object (B) does NOT decrease the tracked object counter
      * @test: Deletion of GNode object (A) decreses the tracked object counter by 2 destroying 
      * the connected object (B) but not (C)
+	 * ---------------------------------------------------------------------------------
+	 * As node (C) was still connected to (A), (A) should have remained alive, but marked for deletion.
+	 * Having (C) still not Del marked, it makes sense to keep (A)
+	 * We can destroy (B) with the assumption that a connection between 2 nodes Del marked is useless
+	 * In the next step deletion of (C) should decrease the counter by 2, taking also (A) with it
+	 * ---------------------------------------------------------------------------------
      * @test: Deletion of object C decreses the object counter by 1
      */
     void testNodeWithConnection();

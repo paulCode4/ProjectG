@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     TestData testList[] = {
         {"TestGraph", new TestGraph()},
         {"TestNode", new TestNode()},
-        //{"TestObjectTracker", new TestObjectTracker()},
+        {"TestObjectTracker", new TestObjectTracker()},
         {"", 0}
     };
     
