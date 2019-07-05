@@ -17,7 +17,7 @@ GGraph::~GGraph(void)
 	{
 		for (auto node : m_graphNodes)
 		{
-			delete node.second;
+			::delete node.second;
 		}
 		m_graphNodes.clear();
 	}
